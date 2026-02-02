@@ -40,6 +40,43 @@ The document provides detailed specifications for system architecture, data mode
 
 ## System Architecture
 
+### Component Descriptions
+
+**Client Layer (React.js frontend provided by Next.js)**
+- Renders server-side and client-side React components
+- Handles two distinct user experiences: anonymous viewer mode and authenticated user mode
+- Implements responsive UIs for mobile and web users, including calendar views, card components, forms and navigation
+- Manages client-side state and form validations
+- Handles image upload workflows using pre-signed URLs
+
+**Application Layer (Next.js backend and API handler)**
+- Provides RESTful API endpoints for all CRUD operations
+- Manages authentication and session handling with next-auth
+- Validates passcodes for viewer access
+- Orchestrates image upload flow with Digital Ocean Spaces
+- Generates PDF documents for trip downloads
+- Sends transactional emails for invitations and lifecycle notifications
+
+**Background Jobs**
+- Scheduled tasks (using cron jobs or similar) to check for expired trips
+- Email notification system for trip lifecycle events (ending soon, expired, etc.)
+- Could be implemented using Vercel Cron Jobs or a simple scheduled function
+
+**Data Layer**
+- **Neon Postgres**: Primary database for all application data with ACID compliance
+- **Digital Ocean Spaces**: Object storage for images, accessed via pre-signed URLs for secure, direct client uploads
+
+### Technology Stack
+
+- **Frontend Framework**: Next.js (React, TypeScript)
+- **Backend**: Next.js
+- **Database**: Neon Postgres (serverless PostgreSQL)
+- **Object Storage**: Digital Ocean Spaces (S3-compatible)
+- **Authentication**: NextAuth.js
+- **Email Service**:
+- **PDF Generation**: jsPDF
+- **Deployment**: Digital Ocean/Docker
+
 ### High-Level Architecture
 
 
